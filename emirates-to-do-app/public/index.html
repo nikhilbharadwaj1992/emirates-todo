@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Emirates Todo App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="custom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="controller.js"></script>
+</head>
+<body ng-app="emiratestodo" ng-controller="MainController">
+	<div class="container padded">
+
+        <!-- HEADER AND TODO COUNT -->
+        <div class="jumbotron text-center">
+            <h2>Emirates Todo List</h2>
+            <div class="label label-info">Total tasks - {{ todos.length }}</div>
+        </div>
+
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center right-aligned">
+                <div class="navbar-nav custom-add">
+                    <label class="radio-pad"><input class="input-m" type="radio" ng-model="optradio" ng-click="toggleFilter('PENDING')" ng-checked="filter=='PENDING'">Pending</label>
+                    <label class="radio-pad"><input class="input-m" type="radio" name="optradio" ng-click="toggleFilter('COMPLETED')" ng-checked="filter=='COMPLETED'">Completed</label>
+                    <label class="radio-pad"><input class="input-m" type="radio" name="optradio" ng-click="toggleFilter('ALL')" ng-checked="filter=='ALL'">All</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORM TO CREATE TODOS -->
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center right-aligned">
+                <div class="navbar-nav custom-add">
+                    <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                    <input type="text" class="input-lg text-center" placeholder="Add a TODO task" ng-model="addTaskValue">
+                    <!-- createToDo() WILL CREATE NEW TODOS -->
+                    <button type="submit" class="btn btn-primary btn-lg mb" ng-click="createTask(addTaskValue)">Add</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TODO LIST -->
+        <div id="container todo-list" class="row">
+            <div class="col-sm-8 col-sm-offset-2 td-button">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Completed</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="" ng-repeat="todo in todos">
+                            <td class="td-item">
+                                {{todo.task}}
+                            </td>
+                            <td class="td-item">
+                                <label class="switch">
+                                    <input type="checkbox" ng-checked="todo.status=='COMPLETED'" ng-click="toggleTodoStatus(todo)" ng-disabled="todo.status=='COMPLETED'">
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td class="">
+                                <button type="submit" class="btn btn-primary btn-lg td-button" ng-click="deleteTask(todo)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- LOOP OVER THE TODOS IN $scope.todos -->
+                <!-- <div class="checkbox" ng-repeat="todo in todos">
+                    <label>
+                        <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.task }}
+                    </label>
+                </div> -->
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
